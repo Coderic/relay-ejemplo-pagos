@@ -1,6 +1,6 @@
 # 💸 PasaPay - Pagos P2P en Tiempo Real
 
-Sistema de pagos P2P estilo Nequi construido con **Vue.js 3** y [Pasarela Gateway](https://github.com/NeftaliYagua/Pasarela).
+Sistema de pagos P2P estilo Nequi construido con **Vue.js 3** y [Pasarela Gateway](https://github.com/Coderic/Pasarela).
 
 ![Vue](https://img.shields.io/badge/Vue.js-3-4FC08D?logo=vue.js)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
@@ -99,8 +99,8 @@ src/
 
 ## 🔗 Enlaces
 
-- [Pasarela Gateway](https://github.com/NeftaliYagua/Pasarela)
-- [Documentación](https://neftaliyagua.github.io/Pasarela/)
+- [Pasarela Gateway](https://github.com/Coderic/Pasarela)
+- [Documentación](https://coderic.github.io/Pasarela/)
 - [Otros ejemplos](https://github.com/Coderic?q=pasarela-ejemplo)
 
 ## 📄 Licencia

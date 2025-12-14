@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      📋 Historial
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- Filtros -->
+    <ion-segment [(ngModel)]="filtro" value="todas">
+      <ion-segment-button value="todas">
+        <ion-label>Todas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="enviadas">
+        <ion-label>Enviadas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="recibidas">
+        <ion-label>Recibidas</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- Lista de transacciones -->
+    <ion-card *ngIf="getTransaccionesFiltradas().length > 0">
+      <ion-list>
+        <ion-item *ngFor="let tx of getTransaccionesFiltradas()" lines="full">
+          <ion-icon 
+            [name]="tx.tipo === 'enviado' ? 'arrow-up' : 'arrow-down'"
+            [color]="tx.tipo === 'enviado' ? 'danger' : 'success'"
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h2>{{ tx.contacto }}</h2>
+            <p>{{ tx.concepto }}</p>
+            <p class="fecha">{{ formatearFecha(tx.timestamp) }}</p>
+          </ion-label>
+          <ion-note 
+            slot="end" 
+            [color]="tx.tipo === 'enviado' ? 'danger' : 'success'">
+            {{ tx.tipo === 'enviado' ? '-' : '+' }}{{ formatearMonto(tx.monto) }}
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <!-- Estado vacío -->
+    <ion-card *ngIf="getTransaccionesFiltradas().length === 0">
+      <ion-card-content class="empty-state">
+        <ion-icon name="document-text" size="large" color="medium"></ion-icon>
+        <p>No hay transacciones</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

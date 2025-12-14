@@ -1,0 +1,7 @@
+{
+  "name": "relay-ejemplo-pagos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

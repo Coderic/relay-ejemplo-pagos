@@ -1,0 +1,31 @@
+.container {
+  padding: 1rem;
+}
+
+.saldo-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-bottom: 1.5rem;
+  
+  .saldo-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+  }
+  
+  .saldo-amount {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+ion-item {
+  --padding-start: 0;
+  margin-bottom: 1rem;
+}
+
+.fecha {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+}
+

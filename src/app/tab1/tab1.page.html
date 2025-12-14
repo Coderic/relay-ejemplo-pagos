@@ -1,0 +1,97 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      💸 Enviar Dinero
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-chip [color]="connected ? 'success' : 'danger'">
+        <ion-label>{{ connected ? '🟢 Conectado' : '🔴 Desconectado' }}</ion-label>
+      </ion-chip>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- Saldo -->
+    <ion-card class="saldo-card">
+      <ion-card-content>
+        <div class="saldo-label">Saldo disponible</div>
+        <div class="saldo-amount">{{ formatearMonto(saldo) }}</div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Formulario de envío -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Nueva Transferencia</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Destinatario</ion-label>
+          <ion-input 
+            type="text" 
+            placeholder="Teléfono o ID"
+            [(ngModel)]="destino"
+            clearOnEdit="true">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Monto</ion-label>
+          <ion-input 
+            type="number" 
+            placeholder="$0"
+            [(ngModel)]="monto"
+            clearOnEdit="true">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Concepto (opcional)</ion-label>
+          <ion-input 
+            type="text" 
+            placeholder="¿Para qué es este pago?"
+            [(ngModel)]="concepto"
+            clearOnEdit="true">
+          </ion-input>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          color="primary"
+          (click)="enviarPago()"
+          [disabled]="!connected || !monto || !destino">
+          <ion-icon name="send" slot="start"></ion-icon>
+          Enviar {{ monto > 0 ? formatearMonto(monto) : '' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Transacciones recientes -->
+    <ion-card *ngIf="transacciones.length > 0">
+      <ion-card-header>
+        <ion-card-title>Transacciones Recientes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let tx of transacciones" lines="full">
+            <ion-icon 
+              [name]="tx.estado === 'completada' ? 'checkmark-circle' : tx.estado === 'rechazada' ? 'close-circle' : 'time'"
+              [color]="tx.estado === 'completada' ? 'success' : tx.estado === 'rechazada' ? 'danger' : 'warning'"
+              slot="start">
+            </ion-icon>
+            <ion-label>
+              <h2>{{ tx.destino }}</h2>
+              <p>{{ tx.concepto }}</p>
+              <p class="fecha">{{ formatearFecha(tx.timestamp) }}</p>
+            </ion-label>
+            <ion-note slot="end" [color]="tx.estado === 'completada' ? 'success' : 'medium'">
+              {{ formatearMonto(tx.monto) }}
+            </ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

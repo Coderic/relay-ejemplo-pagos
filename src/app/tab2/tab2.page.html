@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="success">
+    <ion-title>
+      💰 Recibir Pagos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- QR Code -->
+    <ion-card class="qr-card">
+      <ion-card-content>
+        <div class="qr-container">
+          <div class="qr-code" *ngIf="mostrarQR">
+            <div class="qr-placeholder">
+              <ion-icon name="qr-code" size="large"></ion-icon>
+              <p>{{ qrCode }}</p>
+            </div>
+          </div>
+          <ion-button 
+            expand="block" 
+            color="success"
+            (click)="mostrarQR = !mostrarQR">
+            <ion-icon [name]="mostrarQR ? 'eye-off' : 'eye'" slot="start"></ion-icon>
+            {{ mostrarQR ? 'Ocultar' : 'Mostrar' }} Código QR
+          </ion-button>
+        </div>
+        <p class="qr-info">Comparte este código para recibir pagos</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Solicitar Pago -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Solicitar Pago</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Monto a solicitar</ion-label>
+          <ion-input 
+            type="number" 
+            placeholder="$0"
+            [(ngModel)]="montoSolicitado"
+            clearOnEdit="true">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Concepto (opcional)</ion-label>
+          <ion-input 
+            type="text" 
+            placeholder="¿Para qué es este pago?"
+            [(ngModel)]="concepto"
+            clearOnEdit="true">
+          </ion-input>
+        </ion-item>
+
+        <ion-button 
+          expand="block" 
+          color="success"
+          (click)="solicitarPago()"
+          [disabled]="!connected || !montoSolicitado">
+          <ion-icon name="send" slot="start"></ion-icon>
+          Solicitar Pago
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Pagos Recibidos -->
+    <ion-card *ngIf="pagosRecibidos.length > 0">
+      <ion-card-header>
+        <ion-card-title>Pagos Recibidos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let pago of pagosRecibidos" lines="full">
+            <ion-icon 
+              [name]="pago.estado === 'aceptado' ? 'checkmark-circle' : pago.estado === 'rechazado' ? 'close-circle' : 'time'"
+              [color]="pago.estado === 'aceptado' ? 'success' : pago.estado === 'rechazado' ? 'danger' : 'warning'"
+              slot="start">
+            </ion-icon>
+            <ion-label>
+              <h2>{{ pago.origen }}</h2>
+              <p>{{ pago.concepto }}</p>
+              <p class="fecha">{{ formatearFecha(pago.timestamp) }}</p>
+            </ion-label>
+            <ion-note slot="end" [color]="pago.estado === 'aceptado' ? 'success' : 'medium'">
+              {{ formatearMonto(pago.monto) }}
+            </ion-note>
+            <ion-buttons slot="end" *ngIf="pago.estado === 'pendiente'">
+              <ion-button fill="clear" color="success" (click)="aceptarPago(pago)">
+                <ion-icon name="checkmark"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="rechazarPago(pago)">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

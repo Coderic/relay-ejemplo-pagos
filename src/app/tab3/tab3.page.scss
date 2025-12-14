@@ -1,0 +1,23 @@
+.container {
+  padding: 1rem;
+}
+
+ion-segment {
+  margin-bottom: 1rem;
+}
+
+.fecha {
+  font-size: 0.75rem;
+  color: var(--ion-color-medium);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  
+  p {
+    color: var(--ion-color-medium);
+    margin-top: 1rem;
+  }
+}
+

@@ -31,12 +31,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Update Relay URL for production
-        run: |
-          sed -i.bak "s|window.location.hostname === 'localhost' && window.location.port === '8000'|window.location.hostname === 'localhost' \&\& window.location.port === '8000' \&\& window.location.hostname !== 'coderic.org'|g" src/app/services/relay.service.ts
-          sed -i.bak "s|\${window.location.protocol}//\${window.location.hostname}:5000|window.location.hostname === 'coderic.org' ? 'wss://demo.relay.coderic.net' : \`\${window.location.protocol}//\${window.location.hostname}:5000\`|g" src/app/services/relay.service.ts
-          rm -f src/app/services/relay.service.ts.bak
-
       - name: Build
         run: npm run build -- --configuration production
 

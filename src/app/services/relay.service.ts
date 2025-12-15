@@ -32,6 +32,9 @@ export class RelayService {
     if (window.location.hostname === 'localhost' && window.location.port === '8000') {
       return 'http://localhost:5000';
     }
+    if (window.location.hostname === 'coderic.org') {
+      return 'wss://demo.relay.coderic.net';
+    }
     return `${window.location.protocol}//${window.location.hostname}:5000`;
   }
   
